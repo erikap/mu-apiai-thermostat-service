@@ -1,0 +1,9 @@
+# Linux
+.directory
+*~
+
+
+# npm
+node_modules
+*.log
+*.gz
