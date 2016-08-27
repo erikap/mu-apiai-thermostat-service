@@ -7,11 +7,15 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 
+if (process.env.APIAI_ACCESS_TOKEN === undefined) {
+  throw new Error('Environment variable APIAI_ACCESS_TOKEN is missing');
+}
+
 var app = express();
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+// set application-wide variables
+var apiai = require('apiai');
+app.locals.apiaiApp = apiai(process.env.APIAI_ACCESS_TOKEN);
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
