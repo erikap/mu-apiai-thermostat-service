@@ -2,8 +2,9 @@ var path = require('path');
 var { client } = require(path.join(__dirname, 'sparql'));
 var { selectThermostatByLocation, insertTemperature } = require(path.join(__dirname, 'sparql-queries'));
 
-var updateTemperature = function(amount, unit, calcTemperature) {
-  const query = selectThermostatByLocation('living_room');
+var updateTemperature = function(location, amount, unit, calcTemperature) {
+  const query = selectThermostatByLocation(location);
+  console.log('Query thermostat: ' + query);
   client.query(query)
     .execute()
     .then(function (response) {
@@ -12,6 +13,7 @@ var updateTemperature = function(amount, unit, calcTemperature) {
 	newTemperature = calcTemperature(currTemperature, amount, unit);
 	thermostat = response.results.bindings[0].thermostat.value;
 	const updateQuery = insertTemperature(thermostat, newTemperature);
+	console.log('Update temperature: ' + updateQuery);
 	client.query(updateQuery).execute();
       } else {
 	console.log("No thermostat found");
