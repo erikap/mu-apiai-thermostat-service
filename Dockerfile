@@ -6,7 +6,7 @@ ENV NODE_ENV production
 ENV MU_SPARQL_ENDPOINT 'http://database:8890/sparql'
 ENV MU_APPLICATION_GRAPH 'http://mu.semte.ch/application'
 
-COPY mu-apiai-service.sh /
+COPY mu-apiai-thermostat-service.sh /
 COPY . /app/
 
 RUN cd /app \
@@ -16,4 +16,4 @@ RUN cd /app \
 EXPOSE 80
 WORKDIR /app
 
-CMD ["/bin/bash", "/mu-apiai-service.sh"]
+CMD ["/bin/bash", "/mu-apiai-thermostat-service.sh"]
