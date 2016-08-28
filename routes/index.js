@@ -6,12 +6,15 @@ var handleAction = require(path.join(__dirname, '../action-handler'));
 
 /* GET / */
 router.get('/', function(req, res, next) {
-  var request = req.app.locals.apiaiApp.textRequest(req.query.text);
+  if (req.query.q == undefined || req.query.q == '') {
+    res.status(200).json({ sender: 'Smart Home', text: 'Please provide input' });
+  }
+  var request = req.app.locals.apiaiApp.textRequest(req.query.q);
   
   request.on('response', function(response) {
     console.log(response);
     handleAction(response.result.action, response.result.parameters);
-    res.status(200).json({ message: response.result.fulfillment.speech });
+    res.status(200).json({ sender: 'Smart Home', text: response.result.fulfillment.speech });
   });
   
   request.on('error', function(error) {
