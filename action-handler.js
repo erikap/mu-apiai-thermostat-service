@@ -23,21 +23,22 @@ var updateTemperature = function(amount, unit, calcTemperature) {
 }
 
 var handleAction = function(action, params) {
+  if (params.temperature == undefined) { params.temperature = { amount: 2, unit: 'C' }; }
   switch (action) {
   case 'temperature.increase':
     console.log('Handle temperature increase action');
     var calcTemperature = function(oldTemperature, amount, unit) { return oldTemperature + amount; }
-    updateTemperature(params.temperature.amount, params.temperature.unit, calcTemperature);
+    updateTemperature(params.location, params.temperature.amount, params.temperature.unit, calcTemperature);
     break;
   case 'temperature.decrease':
     console.log('Handle temperature decrease action');
     var calcTemperature = function(oldTemperature, amount, unit) { return oldTemperature - amount; }
-    updateTemperature(params.temperature.amount, params.temperature.unit, calcTemperature);
+    updateTemperature(params.location, params.temperature.amount, params.temperature.unit, calcTemperature);
     break;
   case 'temperature.set':
     console.log('Handle set temperature to ' + params.temperature.amount);
     var calcTemperature = function(oldTemperature, amount, unit) { return amount; }
-    updateTemperature(params.temperature.amount, params.temperature.unit, calcTemperature);
+    updateTemperature(params.location, params.temperature.amount, params.temperature.unit, calcTemperature);
     break;
   default:
     console.log('No action handler found');
