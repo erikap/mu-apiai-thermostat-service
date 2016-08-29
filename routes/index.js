@@ -7,7 +7,7 @@ var handleAction = require(path.join(__dirname, '../action-handler'));
 /* GET / */
 router.get('/', function(req, res, next) {
   if (req.query.q == undefined || req.query.q == '') {
-    res.status(200).json({ sender: 'Smart Home', text: 'Please provide input' });
+    return res.status(200).json({ sender: 'Smart Home', text: 'Please provide input' });
   }
   var request = req.app.locals.apiaiApp.textRequest(req.query.q);
   
